@@ -1,0 +1,48 @@
+<div class="container">
+  <h2>Task List</h2>
+  @if (tasks?.length) {
+    <mat-list>
+      @for (task of tasks; track task.id) {
+        <mat-list-item>
+          <mat-icon mat-list-icon>check</mat-icon>
+          <h3 matLine>{{ task.title }}</h3>
+          <p matLine>
+            <span>{{ task.description }}</span>
+          </p>
+          <button mat-icon-button (click)="editTask(task)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteTask(task.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      }
+    </mat-list>
+  } @else {
+    <mat-panel-title>No tasks</mat-panel-title>
+  }
+  <div>
+    <h2>Add Task</h2>
+    <form (ngSubmit)="addTask(newTaskForm.value)" #newTaskForm="ngForm">
+      <label>Title:</label>
+      <input [(ngModel)]="newTask.title" name="title" required>
+      <label>Description:</label>
+      <input [(ngModel)]="newTask.description" name="description" required>
+      <label>Is Completed:</label>
+      <input type="checkbox" [(ngModel)]="newTask.isCompleted" name="isCompleted">
+      <button type="submit">Add Task</button>
+    </form>
+  </div>
+  @if (selectedTask) {
+    <h2>Edit Task</h2>
+    <form (ngSubmit)="updateTask(selectedTaskForm.value)" #selectedTaskForm="ngForm">
+      <label>Title:</label>
+      <input [(ngModel)]="selectedTask.title" name="title" required>
+      <label>Description:</label>
+      <input [(ngModel)]="selectedTask.description" name="description" required>
+      <label>Is Completed:</label>
+      <input type="checkbox" [(ngModel)]="selectedTask.isCompleted" name="isCompleted">
+      <button type="submit">Update Task</button>
+    </form>
+  }
+</div>
